@@ -1,18 +1,18 @@
 package com.Securityexample.Controller;
 
 import com.Securityexample.Service.AuthService;
+import com.Securityexample.Service.JwtService;
 import com.Securityexample.dto.APIResponse;
 import com.Securityexample.dto.LoginDto;
 import com.Securityexample.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
+
 import org.springframework.web.bind.annotation.*;
 
 
@@ -25,6 +25,9 @@ public class AuthController{
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private JwtService jwtService;
 
     //http://localhost:8080/api/v1/auth/signup
     @PostMapping("/signup")
@@ -46,9 +49,11 @@ public class AuthController{
      try {
          Authentication authenticate = authenticationManager.authenticate(token);
          if (authenticate.isAuthenticated()) {
+            String jwtToken = jwtService.generateToken(loginDto.getUsername(),authenticate.getAuthorities().iterator().next().getAuthority() );
+
              response.setMessage("Login Sucessful");
              response.setStatus(200);
-             response.setData("User has logged");
+             response.setData(jwtToken);
              return new ResponseEntity<>(response, HttpStatusCode.valueOf(response.getStatus()));
          }
      }catch(Exception e) {
@@ -66,7 +71,10 @@ public class AuthController{
 //      ){
 //        return new ResponseEntity<>(userDetails.getUsername(), HttpStatus.OK);
 //      }
+//
 
-    }
+
+}
+
 
 
