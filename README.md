@@ -37,33 +37,6 @@ This project is built for **learning, reference, and interview preparation**, an
 
 ---
 
-## 📂 Project Structure
-
-
-
-
-##📂 Project Structure
-
-src/main/java/com/securityexample
-│
-├── config
-│   ├── SecurityConfig.java
-│   └── JWTFilter.java
-│
-├── controller
-│   ├── AuthController.java
-│   └── WelcomeController.java
-│
-├── dto
-├── entity
-├── repository
-├── service
-│
-└── SecurityexampleApplication.java
-
-
----
-
 ## 🧠 Learning Outcomes
 
 1. Modern Spring Security configuration
