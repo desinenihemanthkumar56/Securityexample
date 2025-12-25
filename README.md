@@ -57,6 +57,21 @@ This project is built for **learning, reference, and interview preparation**, an
 - MySQL
 
 ---
+## 🔐 Password Security
+
+- Passwords are stored using **BCrypt hashing**
+- Plain text passwords are **never stored** in the database
+- Each password is salted and hashed automatically by Spring Security
+- During login, Spring Security safely compares the raw password with the hashed value
+- Manual password comparison is **not required**
+
+> Example stored password format:
+> ```
+> $2a$10$iY/PDj1beO5QxrWQUTFje.FmFPI8r0JN9sBBS8BUB3Fjo/s78Zi3S
+> ```
+> The `$2a$` prefix indicates that the password is hashed using the **BCrypt algorithm**.
+
+---
 
 ## 🔑 Authentication Flow (JWT)
 
