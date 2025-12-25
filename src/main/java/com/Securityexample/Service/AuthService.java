@@ -35,10 +35,10 @@ public class AuthService {
             return response;
         }
 
-
         User user = new User();
         BeanUtils.copyProperties(dto,user);
         user.setPassword(en.encode(dto.getPassword()));
+        user.setRole("ROLE_ADMIN");
         userRepository.save(user);
 
         APIResponse<String> response =new APIResponse<>();
