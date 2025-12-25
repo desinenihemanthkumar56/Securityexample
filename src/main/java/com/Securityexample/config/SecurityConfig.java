@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -23,6 +24,8 @@ public class SecurityConfig {
            "/api/v1/auth/login"
    };
 
+   @Autowired
+   private JWTFilter filter;
 
     @Bean
     public SecurityFilterChain securityConfiguration(HttpSecurity http) throws Exception{
@@ -32,7 +35,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/admin/welcome").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
-                .httpBasic(Customizer.withDefaults());
+                .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
 
     }
